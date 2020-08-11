@@ -15,6 +15,14 @@
 		AB608C7A24E282FB007BB3BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB608C7824E282FB007BB3BB /* LaunchScreen.storyboard */; };
 		AB608C7D24E282FB007BB3BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C7C24E282FB007BB3BB /* main.m */; };
 		AB608C8824E284AF007BB3BB /* BaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C8624E284AF007BB3BB /* BaseAdapter.m */; };
+		AB608C8B24E2893F007BB3BB /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C8A24E2893F007BB3BB /* CustomViewController.m */; };
+		AB608C8E24E2894E007BB3BB /* ExtensionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C8D24E2894E007BB3BB /* ExtensionViewController.m */; };
+		AB608C9124E28983007BB3BB /* ExtendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C9024E28983007BB3BB /* ExtendViewController.m */; };
+		AB608C9424E29101007BB3BB /* People.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C9324E29101007BB3BB /* People.m */; };
+		AB608C9724E29145007BB3BB /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C9624E29145007BB3BB /* CustomCell.m */; };
+		AB608C9A24E29BAF007BB3BB /* NewsAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C9924E29BAF007BB3BB /* NewsAdapter.m */; };
+		AB608C9E24E29C4B007BB3BB /* ExtendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C9C24E29C4B007BB3BB /* ExtendCell.m */; };
+		AB608C9F24E29C4B007BB3BB /* ExtendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB608C9D24E29C4B007BB3BB /* ExtendCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +40,21 @@
 		AB608C7C24E282FB007BB3BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB608C8624E284AF007BB3BB /* BaseAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseAdapter.m; sourceTree = "<group>"; };
 		AB608C8724E284AF007BB3BB /* BaseAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAdapter.h; sourceTree = "<group>"; };
+		AB608C8924E2893F007BB3BB /* CustomViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
+		AB608C8A24E2893F007BB3BB /* CustomViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
+		AB608C8C24E2894E007BB3BB /* ExtensionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtensionViewController.h; sourceTree = "<group>"; };
+		AB608C8D24E2894E007BB3BB /* ExtensionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtensionViewController.m; sourceTree = "<group>"; };
+		AB608C8F24E28983007BB3BB /* ExtendViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtendViewController.h; sourceTree = "<group>"; };
+		AB608C9024E28983007BB3BB /* ExtendViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtendViewController.m; sourceTree = "<group>"; };
+		AB608C9224E29101007BB3BB /* People.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = People.h; sourceTree = "<group>"; };
+		AB608C9324E29101007BB3BB /* People.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = People.m; sourceTree = "<group>"; };
+		AB608C9524E29145007BB3BB /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		AB608C9624E29145007BB3BB /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		AB608C9824E29BAF007BB3BB /* NewsAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsAdapter.h; sourceTree = "<group>"; };
+		AB608C9924E29BAF007BB3BB /* NewsAdapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsAdapter.m; sourceTree = "<group>"; };
+		AB608C9B24E29C4B007BB3BB /* ExtendCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtendCell.h; sourceTree = "<group>"; };
+		AB608C9C24E29C4B007BB3BB /* ExtendCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtendCell.m; sourceTree = "<group>"; };
+		AB608C9D24E29C4B007BB3BB /* ExtendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExtendCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +93,21 @@
 				AB608C6E24E282F9007BB3BB /* SceneDelegate.m */,
 				AB608C7024E282F9007BB3BB /* ViewController.h */,
 				AB608C7124E282F9007BB3BB /* ViewController.m */,
+				AB608C9224E29101007BB3BB /* People.h */,
+				AB608C9324E29101007BB3BB /* People.m */,
+				AB608C8924E2893F007BB3BB /* CustomViewController.h */,
+				AB608C8A24E2893F007BB3BB /* CustomViewController.m */,
+				AB608C9524E29145007BB3BB /* CustomCell.h */,
+				AB608C9624E29145007BB3BB /* CustomCell.m */,
+				AB608C9B24E29C4B007BB3BB /* ExtendCell.h */,
+				AB608C9C24E29C4B007BB3BB /* ExtendCell.m */,
+				AB608C9D24E29C4B007BB3BB /* ExtendCell.xib */,
+				AB608C8C24E2894E007BB3BB /* ExtensionViewController.h */,
+				AB608C8D24E2894E007BB3BB /* ExtensionViewController.m */,
+				AB608C8F24E28983007BB3BB /* ExtendViewController.h */,
+				AB608C9024E28983007BB3BB /* ExtendViewController.m */,
+				AB608C9824E29BAF007BB3BB /* NewsAdapter.h */,
+				AB608C9924E29BAF007BB3BB /* NewsAdapter.m */,
 				AB608C8524E284AF007BB3BB /* BaseAdapter */,
 				AB608C7324E282F9007BB3BB /* Main.storyboard */,
 				AB608C7624E282FB007BB3BB /* Assets.xcassets */,
@@ -149,6 +187,7 @@
 				AB608C7A24E282FB007BB3BB /* LaunchScreen.storyboard in Resources */,
 				AB608C7724E282FB007BB3BB /* Assets.xcassets in Resources */,
 				AB608C7524E282F9007BB3BB /* Main.storyboard in Resources */,
+				AB608C9F24E29C4B007BB3BB /* ExtendCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,11 +198,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB608C9124E28983007BB3BB /* ExtendViewController.m in Sources */,
 				AB608C7224E282F9007BB3BB /* ViewController.m in Sources */,
+				AB608C8E24E2894E007BB3BB /* ExtensionViewController.m in Sources */,
+				AB608C9424E29101007BB3BB /* People.m in Sources */,
+				AB608C9724E29145007BB3BB /* CustomCell.m in Sources */,
+				AB608C8B24E2893F007BB3BB /* CustomViewController.m in Sources */,
 				AB608C8824E284AF007BB3BB /* BaseAdapter.m in Sources */,
 				AB608C6C24E282F9007BB3BB /* AppDelegate.m in Sources */,
+				AB608C9A24E29BAF007BB3BB /* NewsAdapter.m in Sources */,
 				AB608C7D24E282FB007BB3BB /* main.m in Sources */,
 				AB608C6F24E282F9007BB3BB /* SceneDelegate.m in Sources */,
+				AB608C9E24E29C4B007BB3BB /* ExtendCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

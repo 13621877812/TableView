@@ -26,9 +26,9 @@ static NSString *prefix = @"Eden";
 
 #pragma mark -- constructor
 
-+ (BaseAdapter *)adapterWithCellClass:(Class)cellClass {
++ (BaseAdapter *)adapterWithCellClass:(Class)cellClass style:(UITableViewStyle)style {
     
-    UITableView *tableView = [self getTableView];
+    UITableView *tableView = [self getTableView:style];
     return [self adapterWithTableView:tableView cellClass:cellClass];
     
     
@@ -64,12 +64,12 @@ static NSString *prefix = @"Eden";
 + (BaseAdapter *_Nonnull(^)(NSString *cellClassName))adapterWithCellName {
     
    return ^BaseAdapter *(NSString *cellClassName) {
-     return [self adapterWithCellClass:NSClassFromString(cellClassName)];
+     return [self adapterWithCellClass:NSClassFromString(cellClassName) style:UITableViewStyleGrouped];
   };
 }
 + (BaseAdapter *_Nonnull(^)(Class cellClass))adapter {
     return ^BaseAdapter *(Class cellClass) {
-      return [self adapterWithCellClass:cellClass];
+      return [self adapterWithCellClass:cellClass style:UITableViewStyleGrouped];
     };
 }
 
@@ -89,6 +89,7 @@ static NSString *prefix = @"Eden";
     };
 }
 
+
 //设置tableView父View
 - (ParentViewBlock)parentView {
     
@@ -97,6 +98,14 @@ static NSString *prefix = @"Eden";
       return self;
     };
 
+}
+//分界线是否显示
+- (CellSeparatorStyleBlock)separatorStyle {
+    
+   return ^BaseAdapter *(UITableViewCellSeparatorStyle separatorStyle){
+       self.tableView.separatorStyle = separatorStyle;
+       return self;
+    };
 }
 - (RowHeightBlock)rowHeight {
     
@@ -160,34 +169,63 @@ static NSString *prefix = @"Eden";
     return self.sectionCount;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return self.tableViewDatas.count;
+   
+    return [[self getSectionDataSource:section] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    id model = [self getSectionDataSource:indexPath.section][indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellReuseIdentifier];
     NSString *methodName = @"setModel:";
     if (self.cellProps != nil && self.cellProps.length != 0) {
         methodName = [NSString stringWithFormat:@"set%@:",[self.cellProps capitalizedString]];
     }
     if (self.cellForRow == nil && [cell respondsToSelector:NSSelectorFromString(methodName)]) { //查看cell是否有model属性，有则赋予值
-        [cell setValue:self.tableViewDatas[indexPath.row] forKey:@"model"];
+        [cell setValue:model forKey:@"model"];
     }
     if (self.cellForRow) {
-        self.cellForRow(cell,self.tableViewDatas[indexPath.row]);
+        self.cellForRow(cell,model,indexPath);
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    id model = [self getSectionDataSource:indexPath.section][indexPath.row];
     if (self.didSelectRow) {
-        self.didSelectRow(self.tableViewDatas[indexPath.row]);
+        self.didSelectRow(model,indexPath);
     }
 }
+
+#pragma mark -- private
+- (NSArray *)getSectionDataSource:(NSInteger)section {
+    if (self.sectionCount > 1 && self.tableViewDatas.count == self.sectionCount) { //多个区
+        NSArray *sectionDatas = self.tableViewDatas[section];
+        return sectionDatas;
+    }else{
+        return self.tableViewDatas;
+    }
+}
+
+
+
 #pragma mark -- getter&setter
-+ (UITableView *)getTableView {
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
++ (UITableView *)getTableView:(UITableViewStyle)style {
+  
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectZero style:style];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    //当没有cell时去掉分界线
     tableView.tableFooterView = [UIView new];
+    
+    //兼容iOS11以后的系统在Grouped tableView上移
+    UIView *tableHeaderView = [UIView new];
+    tableHeaderView.frame = CGRectMake(0, 0, 0, 0.01);
+    tableView.tableHeaderView = tableHeaderView;
+    
+    //为了防止iOS11 sectionHead和sectionFooter 回调方法不执行
+    tableView.sectionHeaderHeight = 0.01;
+    tableView.sectionFooterHeight = 0.01;
+    
     return tableView;
 }
 - (void)setTableViewDatas:(NSArray *)tableViewDatas {

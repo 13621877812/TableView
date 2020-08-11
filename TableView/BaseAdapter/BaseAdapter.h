@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BaseAdapter : NSObject<UITableViewDelegate,UITableViewDataSource>
 
-typedef void(^CellForRowBlock)(id cell, id model);
+typedef void(^CellForRowBlock)(id cell, id model, NSIndexPath *indexPath);
 
-typedef void(^DidSelectRowBlock)(id model);
+typedef void(^DidSelectRowBlock)(id model, NSIndexPath *indexPath);
 
 
 
@@ -23,11 +23,12 @@ typedef BaseAdapter *_Nonnull(^FrameBlock)(CGRect frame);
 
 typedef BaseAdapter *_Nonnull(^ParentViewBlock)(UIView *parentView);
 
-typedef BaseAdapter *_Nonnull(^TableViewStyleBlock)(UITableViewStyle style);
 
 typedef BaseAdapter *_Nonnull(^SectionCountBlock)(NSInteger sectionCount);
 
 typedef BaseAdapter *_Nonnull(^RowHeightBlock)(CGFloat rowHeight);
+
+typedef BaseAdapter *_Nonnull(^CellSeparatorStyleBlock)(UITableViewCellSeparatorStyle separatorStyle);
 
 typedef BaseAdapter *_Nonnull(^DatasBlock)(NSArray *datas);
 
@@ -42,11 +43,7 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 
 
 
-+ (BaseAdapter *)adapterWithCellClass:(Class)cellClass;
-
-
-+ (BaseAdapter *)adapterWithTableView:(UITableView *)tableView cellClass:(Class)cellClass;
-
++ (BaseAdapter *)adapterWithCellClass:(Class)cellClass style:(UITableViewStyle)style;
 
 
 //链式设置属性
@@ -56,17 +53,21 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 
 + (BaseAdapter *_Nonnull(^)(NSString *cellClassName))adapterWithCellName;
 
+
+//不建议使用
 + (BaseAdapter *_Nonnull(^)(UITableView *tableView,Class cellClass))adapterWithTableView;
 
 
 //设置tableView大小 默认是 CGRectZero
 @property (nonatomic, copy, readonly) FrameBlock frame;
 
-//设置tableView样式 默认是UITableViewStylePlain
-@property (nonatomic, copy, readonly) TableViewStyleBlock style;
+
 
 //设置tableView父View
 @property (nonatomic, copy, readonly) ParentViewBlock parentView;
+
+//设置分界线 默认不显示
+@property (nonatomic, assign, readonly) CellSeparatorStyleBlock separatorStyle;
 
 //设置tableView rowHeight
 @property (nonatomic, assign, readonly) RowHeightBlock rowHeight;
@@ -77,7 +78,8 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 //会自动触发刷新tableView
 @property (nonatomic, copy, readonly) DatasBlock datas;
 
-//设置cell的属性 默认是model，如果cell没有此属性则不传
+//用于自动给cell传值，如果cellForRow设置过 或 调用setCellForRow,则此设置无效
+//如果不设置默认为 model
 @property (nonatomic, copy, readonly) CellPropertyBlock cellProperty;
 
 //设置cellForRow回调
@@ -89,7 +91,7 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 
 
 
-//cell标识符前缀 默认为eden
+//cell标识符为 eden_类名
 @property (nonatomic, copy, readonly) NSString *cellReuseIdentifier;
 
 //tableView
@@ -110,7 +112,7 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 @property (nonatomic, copy) DidSelectRowBlock didSelectRow;
 
 
-//刷新页面
+//刷新页面 不建议使用
 - (void)reloadData;
 
 //刷新指定列表
