@@ -14,6 +14,7 @@
 		AB608C7724E282FB007BB3BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB608C7624E282FB007BB3BB /* Assets.xcassets */; };
 		AB608C7A24E282FB007BB3BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB608C7824E282FB007BB3BB /* LaunchScreen.storyboard */; };
 		AB608C7D24E282FB007BB3BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C7C24E282FB007BB3BB /* main.m */; };
+		AB608C8824E284AF007BB3BB /* BaseAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = AB608C8624E284AF007BB3BB /* BaseAdapter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		AB608C7924E282FB007BB3BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB608C7B24E282FB007BB3BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB608C7C24E282FB007BB3BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AB608C8624E284AF007BB3BB /* BaseAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseAdapter.m; sourceTree = "<group>"; };
+		AB608C8724E284AF007BB3BB /* BaseAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAdapter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +70,7 @@
 				AB608C6E24E282F9007BB3BB /* SceneDelegate.m */,
 				AB608C7024E282F9007BB3BB /* ViewController.h */,
 				AB608C7124E282F9007BB3BB /* ViewController.m */,
+				AB608C8524E284AF007BB3BB /* BaseAdapter */,
 				AB608C7324E282F9007BB3BB /* Main.storyboard */,
 				AB608C7624E282FB007BB3BB /* Assets.xcassets */,
 				AB608C7824E282FB007BB3BB /* LaunchScreen.storyboard */,
@@ -74,6 +78,15 @@
 				AB608C7C24E282FB007BB3BB /* main.m */,
 			);
 			path = TableView;
+			sourceTree = "<group>";
+		};
+		AB608C8524E284AF007BB3BB /* BaseAdapter */ = {
+			isa = PBXGroup;
+			children = (
+				AB608C8724E284AF007BB3BB /* BaseAdapter.h */,
+				AB608C8624E284AF007BB3BB /* BaseAdapter.m */,
+			);
+			path = BaseAdapter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB608C7224E282F9007BB3BB /* ViewController.m in Sources */,
+				AB608C8824E284AF007BB3BB /* BaseAdapter.m in Sources */,
 				AB608C6C24E282F9007BB3BB /* AppDelegate.m in Sources */,
 				AB608C7D24E282FB007BB3BB /* main.m in Sources */,
 				AB608C6F24E282F9007BB3BB /* SceneDelegate.m in Sources */,
