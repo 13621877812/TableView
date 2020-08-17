@@ -12,7 +12,7 @@ static NSString *prefix = @"Eden";
 @interface BaseAdapter()
 
 //cell标识符前缀 默认为eden
-@property (nonatomic, copy, readwrite) NSString *cellReuseIdentifier;
+@property (nonatomic, strong, readwrite) NSArray *cellReuseIdentifiers;
 
 //
 @property (nonatomic, copy, readwrite) NSString *cellProps;
@@ -26,56 +26,71 @@ static NSString *prefix = @"Eden";
 
 #pragma mark -- constructor
 
-+ (BaseAdapter *)adapterWithCellClass:(Class)cellClass style:(UITableViewStyle)style {
++ (BaseAdapter *)adapterWithCellsClass:(NSArray<Class> *)cellsClass style:(UITableViewStyle)style {
     
     UITableView *tableView = [self getTableView:style];
-    return [self adapterWithTableView:tableView cellClass:cellClass];
+    return [self adapterWithTableView:tableView cellsClass:cellsClass];
     
     
 }
-+ (BaseAdapter *)adapterWithTableView:(UITableView *)tableView cellClass:(Class)cellClass {
+- (void)registCell:(NSArray<Class> *)cellsClass {
+    NSMutableArray *cellIds = [@[] mutableCopy];
+    for (Class cellClass in cellsClass) {
+         NSAssert([cellClass isSubclassOfClass:[UITableViewCell class]], @"cellClass 必须是UITableViewCell的子类");
+          NSString *className = NSStringFromClass(cellClass);
+          NSString *cellReuseIdentifier = [NSString stringWithFormat:@"%@_%@", prefix, className];
+        [cellIds addObject:cellReuseIdentifier];
+          NSString *nibPath = [[NSBundle mainBundle]pathForResource:className ofType:@"nib"];
+          if (nibPath) { //当前cell是xib
+              [self.tableView registerNib:[UINib nibWithNibName:className bundle:nil] forCellReuseIdentifier:cellReuseIdentifier];
+          } else { //当前cell不是xib
+              [self.tableView registerClass:cellClass forCellReuseIdentifier:cellReuseIdentifier];
+          }
+    }
+    self.cellReuseIdentifiers = [cellIds copy];
+
+}
++ (BaseAdapter *)adapterWithTableView:(UITableView *)tableView cellsClass:(NSArray<Class> *)cellsClass {
    
     NSAssert([tableView isKindOfClass:[UITableView class]], @"tableView 必须是UITableView的子类");
- 
-
-    NSAssert([cellClass isSubclassOfClass:[UITableViewCell class]], @"cellClass 必须是UITableViewCell的子类");
 
     BaseAdapter *adapter = [self new];
     adapter.sectionCount = 1;
 
-    NSString *className = NSStringFromClass(cellClass);
-    NSString *cellReuseIdentifier = [NSString stringWithFormat:@"%@_%@", prefix, className];
-
-    NSString *nibPath = [[NSBundle mainBundle]pathForResource:className ofType:@"nib"];
-    if (nibPath) { //当前cell是xib
-        [tableView registerNib:[UINib nibWithNibName:className bundle:nil] forCellReuseIdentifier:cellReuseIdentifier];
-    } else { //当前cell不是xib
-        [tableView registerClass:cellClass forCellReuseIdentifier:cellReuseIdentifier];
-    }
-
+    
+    
+    
     tableView.delegate = adapter;
     tableView.dataSource = adapter;
 
     adapter.tableView = tableView;
-    adapter.cellReuseIdentifier = cellReuseIdentifier;
+    
+    [adapter registCell:cellsClass];
+    
 
     return adapter;
 }
-+ (BaseAdapter *_Nonnull(^)(NSString *cellClassName))adapterWithCellName {
++ (BaseAdapter *_Nonnull(^)(NSArray<NSString *> *cellsClassName))adapterWithCellsName {
     
-   return ^BaseAdapter *(NSString *cellClassName) {
-     return [self adapterWithCellClass:NSClassFromString(cellClassName) style:UITableViewStyleGrouped];
+    
+    
+   return ^BaseAdapter *(NSArray<NSString *> *cellsClassName) {
+       NSMutableArray *classes = [@[] mutableCopy];
+       for(int index = 0;index < cellsClassName.count;index++){
+           [classes addObject:NSClassFromString(cellsClassName[index])];
+        }
+       return [self adapterWithCellsClass:[classes copy] style:UITableViewStyleGrouped];
   };
 }
-+ (BaseAdapter *_Nonnull(^)(Class cellClass))adapter {
-    return ^BaseAdapter *(Class cellClass) {
-      return [self adapterWithCellClass:cellClass style:UITableViewStyleGrouped];
++ (BaseAdapter *_Nonnull(^)(NSArray<Class>  * cellsClass))adapter {
+    return ^BaseAdapter *(NSArray<Class>  * cellsClass) {
+      return [self adapterWithCellsClass:cellsClass style:UITableViewStyleGrouped];
     };
 }
 
-+ (BaseAdapter *_Nonnull(^)(UITableView *tableView,Class cellClass))adapterWithTableView {
-    return ^BaseAdapter *(UITableView *tableView, Class cellClass) {
-       return [self adapterWithTableView:tableView cellClass:cellClass];
++ (BaseAdapter *_Nonnull(^)(UITableView *tableView,NSArray<Class> *cellsClass))adapterWithTableView {
+    return ^BaseAdapter *(UITableView *tableView, NSArray<Class> *cellsClass) {
+       return [self adapterWithTableView:tableView cellsClass:cellsClass];
     };
 }
 
@@ -141,7 +156,13 @@ static NSString *prefix = @"Eden";
     };
     
 }
-
+- (SetSelectCellBlock)setSelectCell {
+    
+   return ^BaseAdapter *(SelectCellBlock selectCell){
+        self.selectCellBlock = selectCell;
+        return self;
+    };
+}
 
 - (SetCellForRowBlock)setCellForRow {
     
@@ -175,7 +196,13 @@ static NSString *prefix = @"Eden";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     id model = [self getSectionDataSource:indexPath.section][indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.cellReuseIdentifier];
+   
+    NSString *cellReuseIdentifier = self.cellReuseIdentifiers.firstObject;
+    if (self.selectCellBlock) {
+        NSInteger index = self.selectCellBlock();
+        cellReuseIdentifier = self.cellReuseIdentifiers[index];
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuseIdentifier];
     NSString *methodName = @"setModel:";
     if (self.cellProps != nil && self.cellProps.length != 0) {
         methodName = [NSString stringWithFormat:@"set%@:",[self.cellProps capitalizedString]];

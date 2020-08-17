@@ -59,7 +59,7 @@
 
 - (BaseAdapter *)adapter {
     if (_adapter == nil) {
-        _adapter = [BaseAdapter adapterWithCellClass:[UITableViewCell class] style:UITableViewStylePlain];
+        _adapter = [BaseAdapter adapterWithCellsClass:@[[UITableViewCell class]] style:UITableViewStylePlain];
     }
    return _adapter;
 }

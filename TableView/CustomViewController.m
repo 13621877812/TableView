@@ -45,7 +45,7 @@
     UITableView *tableView = self.adapter.tableView;
     
     //获取cell标识符
-    NSString *cellReuseIdentifier = self.adapter.cellReuseIdentifier;
+    NSArray *cellReuseIdentifiers = self.adapter.cellReuseIdentifiers;
     
     //利用非链式回调
 //    self.adapter.cellForRow = ^(id  _Nonnull cell, id  _Nonnull model, NSIndexPath * _Nonnull indexPath) {
@@ -92,9 +92,9 @@
 - (BaseAdapter *)adapter {
     if (_adapter == nil) {
         //三种创建方式 效果一样 喜欢哪一种自己选择 自动支持xib
-//        _adapter = [BaseAdapter adapterWithCellClass:[CustomCell class] style:nil];
-       _adapter = BaseAdapter.adapter([CustomCell class]);
-//        _adapter = BaseAdapter.adapterWithCellName(@"CustomCell");
+//        _adapter = [BaseAdapter adapterWithCellsClass:@[[CustomCell class]] style:nil];
+       _adapter = BaseAdapter.adapter(@[[CustomCell class]]);
+//        _adapter = BaseAdapter.adapterWithCellsName(@[@"CustomCell"]);
     }
    return _adapter;
 }

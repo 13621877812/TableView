@@ -14,6 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^CellForRowBlock)(id cell, id model, NSIndexPath *indexPath);
 
+
+typedef NSInteger(^SelectCellBlock)(void);
+
+
+
 typedef void(^DidSelectRowBlock)(id model, NSIndexPath *indexPath);
 
 
@@ -37,25 +42,32 @@ typedef BaseAdapter *_Nonnull(^CellPropertyBlock)(NSString *cellProperty);
 
 typedef BaseAdapter *_Nonnull(^SetCellForRowBlock)(CellForRowBlock cellForRow);
 
+
+typedef BaseAdapter *_Nonnull(^SetSelectCellBlock)(SelectCellBlock selectCell);
+
+
+
+
+
 typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelectRow);
 
 
 
 
 
-+ (BaseAdapter *)adapterWithCellClass:(Class)cellClass style:(UITableViewStyle)style;
++ (BaseAdapter *)adapterWithCellsClass:(NSArray<Class> *)cellsClass style:(UITableViewStyle)style;
 
 
 //链式设置属性
 
 //用链式调用创建适配器(用属性的方式，block会联想，方便使用)
-+ (BaseAdapter *_Nonnull(^)(Class cellClass))adapter;
++ (BaseAdapter *_Nonnull(^)(NSArray<Class>  * cellsClass))adapter;
 
-+ (BaseAdapter *_Nonnull(^)(NSString *cellClassName))adapterWithCellName;
++ (BaseAdapter *_Nonnull(^)(NSArray<NSString *> *cellsClassName))adapterWithCellsName;
 
 
 //不建议使用
-+ (BaseAdapter *_Nonnull(^)(UITableView *tableView,Class cellClass))adapterWithTableView;
++ (BaseAdapter *_Nonnull(^)(UITableView *tableView,NSArray<Class> *cellsClass))adapterWithTableView;
 
 
 //设置tableView大小 默认是 CGRectZero
@@ -82,8 +94,14 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 //如果不设置默认为 model
 @property (nonatomic, copy, readonly) CellPropertyBlock cellProperty;
 
+//针对多种类型的cell，必传
+@property (nonatomic, copy, readonly) SetSelectCellBlock setSelectCell;
+
+
 //设置cellForRow回调
 @property (nonatomic, copy, readonly) SetCellForRowBlock setCellForRow;
+
+
 
 //设置点击cell回调
 @property (nonatomic, copy, readonly) SetDidSelectRowBlock setDidSelectRow;
@@ -92,7 +110,7 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 
 
 //cell标识符为 eden_类名
-@property (nonatomic, copy, readonly) NSString *cellReuseIdentifier;
+@property (nonatomic, strong, readonly) NSArray *cellReuseIdentifiers;
 
 //tableView
 @property (nonatomic, strong, readonly) UITableView *tableView;
@@ -103,6 +121,10 @@ typedef BaseAdapter *_Nonnull(^SetDidSelectRowBlock)(DidSelectRowBlock didSelect
 
 //会自动触发刷新tableView
 @property (nonatomic, strong) NSArray *tableViewDatas;
+
+
+//cellforrow
+@property (nonatomic, copy) SelectCellBlock selectCellBlock;
 
 
 //cellforrow

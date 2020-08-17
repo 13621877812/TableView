@@ -68,9 +68,10 @@
 - (BaseAdapter *)adapter {
     if (_adapter == nil) {
         //三种创建方式 效果一样 喜欢哪一种自己选择 自动支持xib
-        _adapter = [BaseAdapter adapterWithCellClass:[CustomCell class] style:UITableViewStyleGrouped];
-//        _adapter = BaseAdapter.adapter([CustomCell class]);
-//        _adapter = BaseAdapter.adapterWithCellName(@"CustomCell");
+        _adapter = [BaseAdapter adapterWithCellsClass:@[[CustomCell class]] style:UITableViewStyleGrouped] ;
+       
+//        _adapter = BaseAdapter.adapter(@[[CustomCell class]]);
+//        _adapter = BaseAdapter.adapterWithCellsName(@[@"CustomCell"]);
     }
    return _adapter;
 }

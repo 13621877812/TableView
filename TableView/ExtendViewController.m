@@ -61,9 +61,9 @@
 - (NewsAdapter *)adapter {
     if (_adapter == nil) {
         //三种创建方式 效果一样 喜欢哪一种自己选择 自动支持xib
-//        _adapter = [BaseAdapter adapterWithCellClass:[ExtendCell class]];
-//        _adapter = BaseAdapter.adapter([CustomCell class]);
-       _adapter = (NewsAdapter *)NewsAdapter.adapterWithCellName(@"ExtendCell");
+//        _adapter = [BaseAdapter adapterWithCellsClass:@[[ExtendCell class]]];
+//        _adapter = BaseAdapter.adapter(@[[CustomCell class]]);
+       _adapter = (NewsAdapter *)NewsAdapter.adapterWithCellsName(@[@"ExtendCell"]);
     }
    return _adapter;
 }
